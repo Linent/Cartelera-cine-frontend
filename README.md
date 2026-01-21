@@ -349,4 +349,5 @@ La UI responde correctamente a estados extremos (cargas largas, errores, vacío)
 ### 👋 Autor
 
 Desarrollado como prueba técnica por Anderson Eduardo Ochoa Peñaranda
-Con enfoque en arquitectura limpia, UX y código mantenible.
+Con enfoque en arquitectura limpia, UX y código mantenible. 
+Espero les guste
