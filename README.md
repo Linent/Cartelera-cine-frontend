@@ -350,5 +350,3 @@ La UI responde correctamente a estados extremos (cargas largas, errores, vacío)
 
 Desarrollado como prueba técnica por Anderson Eduardo Ochoa Peñaranda
 Con enfoque en arquitectura limpia, UX y código mantenible.
-#   C a r t e l e r a - c i n e - f r o n t e n d  
- 
