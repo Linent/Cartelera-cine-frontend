@@ -1,0 +1,73 @@
+<div
+  class="fixed inset-0 z-50
+         bg-black/60 backdrop-blur-sm
+         flex items-end sm:items-center justify-center
+         modal-backdrop
+         animate-backdropFade"
+  (click)="onBackdropClick($event)"
+>
+
+  <!-- MODAL -->
+  <div
+    class="w-full sm:w-96
+           bg-zinc-900 border border-white/10
+           rounded-t-3xl sm:rounded-2xl
+           p-6
+           animate-modalEnter"
+  >
+
+    <!-- HEADER -->
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <h3 class="text-lg font-bold text-white">
+          Selecciona un tipo
+        </h3>
+        <p class="text-white/40 text-sm">
+          Elige el tipo de Pokémon
+        </p>
+      </div>
+
+      <!-- BOTÓN CERRAR -->
+      <button
+        (click)="close.emit()"
+        class="text-white/40 hover:text-red-400
+               transition-colors p-1"
+        aria-label="Cerrar"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- LISTADO -->
+    <div class="max-h-80 overflow-y-auto space-y-1">
+      <button
+        *ngFor="let option of options"
+        (click)="select.emit(option)"
+        class="w-full text-left px-4 py-3 rounded-xl
+               border transition-all duration-200
+               active:scale-95"
+        [ngClass]="{
+          'border-red-500 bg-red-500/10 text-white shadow-[0_0_12px_rgba(239,68,68,0.15)]':
+            option.value === value,
+          'border-white/10 bg-white/5 text-white/70 hover:border-white/30':
+            option.value !== value
+        }"
+      >
+        {{ option.label }}
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <button
+      (click)="close.emit()"
+      class="mt-6 w-full py-3 rounded-full
+             bg-zinc-800 hover:bg-zinc-700
+             text-white text-sm font-medium
+             transition-all active:scale-95"
+    >
+      Cancelar
+    </button>
+
+  </div>
+
+</div>

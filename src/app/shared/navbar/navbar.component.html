@@ -1,0 +1,15 @@
+<header class="w-full bg-black/80 backdrop-blur border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2 text-white font-bold text-lg">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokeball"
+        class="w-6 h-6" />
+      <span>Pokédex</span>
+    </div>
+
+    <button (click)="openLogin()"
+      class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full text-sm font-medium transition">
+      <app-login-icon />
+      <span>Iniciar Sesión</span>
+    </button>
+  </div>
+</header>

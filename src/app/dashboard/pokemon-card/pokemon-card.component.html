@@ -1,0 +1,67 @@
+<div class="group relative overflow-hidden rounded-2xl
+         border border-white/10 bg-white/5 p-5
+         transition-all duration-300
+         hover:border-red-500/40
+         hover:shadow-2xl hover:shadow-red-500/10
+         hover:-translate-y-1">
+
+  <div class="absolute top-3 right-3 text-xs font-mono text-white/30">
+    #{{ pokemon.id | number: '3.0' }}
+  </div>
+
+
+  <div class="relative mb-4 flex h-32 w-full items-center justify-center">
+    <div class="absolute inset-0 bg-red-500/5 blur-2xl opacity-0
+             group-hover:opacity-100 transition-opacity"></div>
+
+    <img [src]="artwork" [alt]="pokemon.name" class="relative z-10 h-full w-full object-contain
+             transition-transform duration-500
+             group-hover:scale-110" loading="lazy" />
+  </div>
+
+  <h3 class="mb-3 text-center text-lg font-bold capitalize tracking-wide text-white">
+    {{ pokemon.name }}
+  </h3>
+
+  <div class="flex justify-center gap-2">
+    <span *ngFor="let t of pokemon.types" class="rounded-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white
+             transition-all duration-300
+             hover:-translate-y-0.5 hover:scale-110
+             hover:brightness-125 hover:shadow-md hover:shadow-black/30
+             cursor-default" [ngClass]="typeColors[t.type.name] || 'bg-gray-500'">
+      {{ t.type.name }}
+    </span>
+  </div>
+
+  <div class="mt-5 space-y-2">
+    <div *ngFor="let stat of pokemon.stats | slice: 0 : 3" class="group/stat flex items-center gap-3">
+
+      <span class="w-10 text-[10px] font-medium uppercase text-white/40">
+        {{
+          stat.stat.name === 'special-attack'
+            ? 'SPA'
+            : stat.stat.name === 'special-defense'
+              ? 'SPD'
+              : stat.stat.name.slice(0, 3)
+        }}
+      </span>
+
+      <div class="h-1.5 flex-1 rounded-full bg-white/10 overflow-hidden
+               transition-all duration-300
+               group-hover/stat:h-2">
+        <div class="h-full rounded-full bg-red-500
+                 transition-all duration-500 ease-out
+                 group-hover/stat:brightness-125
+                 group-hover/stat:shadow-md
+                 group-hover/stat:shadow-red-500/40" [style.width]="statWidth(stat.base_stat)"></div>
+      </div>
+
+      <span class="w-7 text-right text-[10px] font-mono text-white/60
+               transition-all duration-50
+               group-hover/stat:text-white
+               group-hover/stat:scale-110">
+        {{ stat.base_stat }}
+      </span>
+    </div>
+  </div>
+</div>

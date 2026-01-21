@@ -1,0 +1,45 @@
+<div class="flex flex-col md:flex-row gap-4 w-full items-stretch md:items-center">
+
+  <div class="flex flex-row flex-1 gap-2">
+    <div class="relative flex-1">
+      <input
+        [(ngModel)]="filters.search"
+        [disabled]="disabled"
+        placeholder="Buscar Pokémon..."
+        class="w-full bg-[#121212] border border-white/5 rounded-2xl md:rounded-full px-6 py-3.5 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-red-500/50 transition-all disabled:opacity-40"
+        (keyup.enter)="!disabled && applyFilters()"
+      />
+      <app-search-icon class="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 md:hidden" />
+    </div>
+
+    <button
+      (click)="applyFilters()"
+      [disabled]="disabled || !filters.search.trim()"
+      class="hidden md:flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white text-sm transition-all active:scale-95 disabled:opacity-40"
+    >
+      <app-search-icon class="w-4 h-4" />
+      <span>Buscar</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 md:flex md:flex-row gap-3">
+
+    <app-dropdown
+      class="w-full md:min-w-40"
+      [options]="types"
+      [value]="filters.type"
+      [disabled]="disabled"
+      (valueChange)="onTypeChange($event)">
+    </app-dropdown>
+
+    <button
+      (click)="applyStrongest()"
+      [disabled]="disabled"
+      class="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl md:rounded-full bg-red-600 hover:bg-red-500 text-white text-sm font-bold transition-all active:scale-95 disabled:opacity-50 shadow-[0_0_15px_rgba(220,38,38,0.4)] whitespace-nowrap"
+    >
+      <app-chart-icon class="w-4 h-4" />
+      <span>Más fuerte</span>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,62 @@
+<div
+  class="relative w-full max-w-2xl rounded-2xl border border-white/10 bg-black/80 backdrop-blur p-8 shadow-2xl text-white"
+>
+  <button
+    class="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 transition text-white"
+    (click)="close.emit()"
+    aria-label="Cerrar"
+  >
+    ✕
+  </button>
+
+  <div class="mb-8 text-center">
+    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+        alt="Pokeball"
+        class="h-10 w-10"
+      />
+    </div>
+
+    <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
+    <p class="mt-2 text-sm text-white/60">Ingresa tus credenciales para acceder</p>
+  </div>
+
+  <form (ngSubmit)="login()" class="space-y-6">
+    <div *ngIf="error" class="rounded-lg bg-red-500/10 p-3 text-sm text-red-400">⚠ {{ error }}</div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-medium">Nickname</label>
+      <input
+        type="text"
+        [(ngModel)]="nickname"
+        name="nickname"
+        required
+        placeholder="Ingresa tu nickname"
+        class="w-full rounded-lg bg-white/5 border border-white/10 py-2 px-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-500"
+      />
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-sm font-medium">Contraseña</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        placeholder="Ingresa tu contraseña"
+        class="w-full rounded-lg bg-white/5 border border-white/10 py-2 px-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-500"
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      class="w-full rounded-lg bg-red-600 py-2 font-semibold hover:bg-red-700 transition disabled:opacity-50"
+    >
+      {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
+    </button>
+  </form>
+
+  <p class="mt-6 text-center text-xs text-white/40">Credenciales de prueba: iptdevs / 123456</p>
+</div>

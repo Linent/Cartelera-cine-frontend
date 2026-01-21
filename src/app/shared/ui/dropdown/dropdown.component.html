@@ -1,0 +1,61 @@
+<div class="relative w-full">
+
+  <!-- BOTÓN -->
+  <button
+    type="button"
+    (click)="toggle()"
+    [disabled]="disabled"
+    class="flex items-center justify-between w-full
+           px-6 py-2.5 rounded-full
+           bg-zinc-900 border border-white/10
+           text-white text-sm font-medium
+           transition-all
+           disabled:opacity-40
+           disabled:cursor-not-allowed
+           disabled:hover:bg-zinc-900
+           disabled:hover:border-white/10
+           disabled:active:scale-100"
+  >
+    <span class="truncate max-w-40 text-left">
+      {{ selectedLabel }}
+    </span>
+
+    <svg
+      class="w-4 h-4 ml-3 opacity-70 shrink-0"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- DROPDOWN DESKTOP -->
+  <div
+    *ngIf="open && !disabled"
+    class="absolute z-50 mt-2 w-full
+           rounded-2xl bg-zinc-900 border border-white/10
+           shadow-xl overflow-hidden"
+  >
+    <div
+      *ngFor="let option of options"
+      (click)="select(option)"
+      class="px-4 py-2 text-sm cursor-pointer
+             hover:bg-white/10 transition"
+      [class.bg-white/10]="option.value === value"
+    >
+      {{ option.label }}
+    </div>
+  </div>
+
+  <!-- MODAL MOBILE -->
+  <app-dropdown-modal
+    *ngIf="showModal && !disabled"
+    [options]="options"
+    [value]="value"
+    (select)="select($event)"
+    (close)="closeModal()"
+  ></app-dropdown-modal>
+
+</div>

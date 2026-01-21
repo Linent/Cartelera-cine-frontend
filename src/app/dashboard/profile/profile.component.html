@@ -1,0 +1,110 @@
+
+<div *ngIf="loading" class="flex flex-col items-center justify-center min-h-[60vh]">
+  <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500 mb-4"></div>
+  <p class="text-white/40">Cargando tu perfil...</p>
+</div>
+
+
+<div *ngIf="!loading && user" class="animate-fadeIn">
+
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold text-white">Mi Perfil</h1>
+    <p class="text-white/40 mt-1">Administra tu información personal y preferencias</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <div class="rounded-2xl bg-white/5 border border-white/10 p-6 text-center h-fit">
+      <div class="relative inline-block">
+        <img
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+          class="w-24 h-24 mx-auto rounded-full border-4 border-red-500 shadow-lg shadow-red-500/20"
+        />
+        <span
+          class="absolute bottom-1 right-1 bg-green-500 w-4 h-4 rounded-full border-2 border-black"
+        >
+        </span>
+      </div>
+
+      <h3 class="mt-4 text-xl font-bold text-white">
+        {{ user.username }}
+      </h3>
+
+      <p class="text-white/40 text-sm">Usuario activo</p>
+
+
+      <div class="mt-6 rounded-xl bg-white/5 border border-white/10 p-4 text-left">
+        <h4 class="text-sm font-semibold mb-1">Seguridad</h4>
+        <p class="text-white/40 text-xs mb-3">Protege el acceso a tu cuenta</p>
+
+        <button
+          (click)="openPasswordModal()"
+          class="flex items-center gap-2 text-sm text-red-400 hover:text-white transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-5 h-5"
+          >
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+            <path d="m15 5 4 4" />
+          </svg>
+          Cambiar contraseña
+        </button>
+      </div>
+
+      <div class="mt-6 p-3 bg-white/5 rounded-xl text-xs text-white/60">
+        Géneros favoritos:
+        <span class="text-red-500 font-bold text-lg block">
+          {{ selected.size }}
+        </span>
+      </div>
+    </div>
+
+
+    <div class="lg:col-span-2 rounded-2xl bg-white/5 border border-white/10 p-6">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-white">Preferencias</h2>
+        <p class="text-white/40">Personaliza tu experiencia seleccionando tus géneros favoritos</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button
+          *ngFor="let genre of genres"
+          (click)="toggleGenre(genre.id)"
+          class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all active:scale-95"
+          [ngClass]="{
+            'border-red-500 bg-red-500/10 text-white': isSelected(genre.id),
+            'border-white/10 bg-white/5 text-white/60 hover:border-white/30': !isSelected(genre.id),
+          }"
+        >
+          <span class="text-xl">
+            {{ icons[genre.name.toLowerCase()] || '🎥' }}
+          </span>
+          <span class="font-medium truncate">{{ genre.name }}</span>
+        </button>
+      </div>
+
+      <div class="mt-10 flex flex-col md:flex-row md:justify-end">
+        <button
+          (click)="save()"
+          class="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white px-10 py-3 rounded-full font-bold transition-all shadow-lg shadow-red-600/30 active:scale-95"
+        >
+          Guardar Preferencias
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-password-modal
+  *ngIf="showPasswordModal"
+  (close)="closePasswordModal()"
+  (updated)="onPasswordUpdated()"
+>
+</app-password-modal>

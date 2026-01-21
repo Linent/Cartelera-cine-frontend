@@ -1,0 +1,22 @@
+export const GENRE_ICONS: Record<string, string> = {
+  acción: "🎬",
+  aventura: "🗺️",
+  comedia: "😂",
+  drama: "🎭",
+  fantasía: "🧙",
+  "ciencia ficción": "🚀",
+  terror: "👻",
+  romance: "💕",
+  animación: "🎨",
+  documental: "📹",
+  thriller: "🔪",
+  misterio: "🔍",
+  crimen: "🕵️",
+  suspenso: "😰",
+  musical: "🎵",
+  bélico: "🎖️",
+  western: "🤠",
+  histórico: "🏛️",
+  biográfico: "📖",
+  deportes: "⚽"
+};

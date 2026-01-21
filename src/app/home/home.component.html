@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-black">
+  <app-navbar (loginClick)="openLogin()"></app-navbar>
+
+  <main class="max-w-7xl mx-auto px-6 pb-12">
+    <app-hero-slider></app-hero-slider>
+    <app-feature-cards></app-feature-cards>
+  </main>
+
+
+  <div *ngIf="showLogin" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur"
+    (click)="closeLogin()">
+
+    <div class="relative" (click)="$event.stopPropagation()">
+      <app-login (close)="closeLogin()" (loginSuccess)="onLoginSuccess()"></app-login>
+    </div>
+  </div>
+</div>
