@@ -1,3 +1,6 @@
+<!-- ========================= -->
+<!-- 🧭 HEADER DE SECCIÓN -->
+<!-- ========================= -->
 <section class="mb-12 text-center md:text-left">
   <h1 class="text-3xl font-bold text-white">
     Bienvenido, iptdevs! 👋
@@ -7,56 +10,108 @@
   </p>
 </section>
 
+<!-- ========================= -->
+<!-- 🔍 FILTROS -->
+<!-- ========================= -->
 <section class="mb-12">
   <app-pokemon-filters
-    [disabled]="loading || loadingStrongest"
+    [disabled]="loading"
     [externalFilters]="{
       search: searchTerm,
       type: selectedType,
-      sort: mode === 'strongest' ? 'strongest' : 'none',
+      sort:
+        mode === 'strongest'
+          ? 'strongest'
+          : mode === 'weakest'
+          ? 'weakest'
+          : 'none'
     }"
     (filtersChange)="onFiltersChange($event)"
   >
   </app-pokemon-filters>
 </section>
 
+<!-- ========================= -->
+<!-- ⏳ LOADING GENERAL -->
+<!-- ========================= -->
 <section
   *ngIf="loading && filtered.length === 0"
   class="flex flex-col items-center justify-center my-24"
 >
-  <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500 mb-4"></div>
-  <p class="text-white/40 text-sm tracking-wide animate-pulse">Cargando Pokédex...</p>
-</section>
-
-<section *ngIf="loadingStrongest" class="flex flex-col items-center justify-center my-32">
-  <div class="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-red-500 mb-6"></div>
+  <div
+    class="animate-spin rounded-full h-12 w-12
+           border-t-2 border-b-2 border-red-500 mb-4"
+  ></div>
 
   <p class="text-white text-lg font-semibold">
-    Calculando los Pokémon más fuertes, puede tomar unos segundos...
+    {{
+      mode === 'strongest'
+        ? 'Ordenando Pokémon por los más fuertes...'
+        : mode === 'weakest'
+        ? 'Ordenando Pokémon por los más débiles...'
+        : 'Cargando Pokédex...'
+    }}
   </p>
 
-  <p class="text-white/40 text-sm mt-2 animate-pulse">Analizando estadísticas de combate...</p>
+  <p class="text-white/40 text-sm mt-2 animate-pulse">
+    {{
+      mode === 'strongest' || mode === 'weakest'
+        ? 'Analizando estadísticas de combate...'
+        : 'Obteniendo información desde la PokéAPI...'
+    }}
+  </p>
 </section>
 
-<section *ngIf="!loading && filtered.length === 0" class="text-center my-24">
-  <p class="text-white/40 text-xl">No se encontraron Pokémon con esos criterios.</p>
+<!-- ========================= -->
+<!-- ❌ SIN RESULTADOS -->
+<!-- ========================= -->
+<section
+  *ngIf="!loading && filtered.length === 0"
+  class="text-center my-24"
+>
+  <p class="text-white/40 text-xl">
+    No se encontraron Pokémon con esos criterios.
+  </p>
 </section>
 
-<section *ngIf="filtered.length > 0 && !loadingStrongest" class="mb-16">
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-    <app-pokemon-card *ngFor="let pokemon of filtered" [pokemon]="pokemon"> </app-pokemon-card>
+<!-- ========================= -->
+<!-- 🧩 GRID DE POKÉMON -->
+<!-- ========================= -->
+<section
+  *ngIf="filtered.length > 0 && !loading"
+  class="mb-16"
+>
+  <div
+    class="grid grid-cols-1
+           sm:grid-cols-2
+           md:grid-cols-3
+           lg:grid-cols-4
+           gap-8"
+  >
+    <app-pokemon-card
+      *ngFor="let pokemon of filtered"
+      [pokemon]="pokemon"
+    >
+    </app-pokemon-card>
   </div>
 </section>
 
+<!-- ========================= -->
+<!-- ➕ CARGAR MÁS -->
+<!-- ========================= -->
 <section
+  *ngIf="!noMore && mode !== 'search' && !loading"
   class="flex justify-center mb-24"
-  *ngIf="!noMore && mode !== 'search' && !loadingStrongest"
 >
   <button
     (click)="loadMore()"
-    [disabled]="loading || loadingStrongest"
-    class="bg-red-600 hover:bg-red-700 text-white px-10 py-3 rounded-full font-bold transition-all shadow-lg shadow-red-600/30 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+    class="bg-red-600 hover:bg-red-700
+           text-white px-10 py-3
+           rounded-full font-bold
+           transition-all shadow-lg shadow-red-600/30
+           active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed"
   >
-    {{ loading ? 'Cargando...' : 'Cargar más Pokémon' }}
+    Cargar más Pokémon
   </button>
 </section>

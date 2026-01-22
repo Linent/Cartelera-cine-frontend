@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,7 +30,6 @@ import { typesPokemon } from './typesPokemon';
 export class PokemonFiltersComponent implements OnChanges {
 
   @Input() disabled = false;
-
   @Input() externalFilters!: PokemonFilters;
 
   @Output() filtersChange = new EventEmitter<PokemonFilters>();
@@ -36,35 +42,46 @@ export class PokemonFiltersComponent implements OnChanges {
 
   types = typesPokemon;
 
+  sortOptions = [
+    { label: 'Más fuertes', value: 'strongest' },
+    { label: 'Más débiles', value: 'weakest' }
+  ];
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['externalFilters'] && this.externalFilters) {
       this.filters = { ...this.externalFilters };
     }
   }
 
-applyFilters() {
-  if (this.disabled || !this.filters.search.trim()) return;
+  // 🔍 Buscar por nombre
+  applySearch() {
+    if (this.disabled) return;
+    //if (!this.filters.search.trim()) return;
+    this.filters.type = '';
+    this.filters.sort = 'none';
+    this.filtersChange.emit({ ...this.filters });
+  }
 
-  this.filters.type = '';
-  this.filters.sort = 'none';
-  this.filtersChange.emit({ ...this.filters });
-}
+  // 🧬 Cambio de tipo
+  onTypeChange(type: string) {
+    if (this.disabled) return;
 
-applyStrongest() {
+    this.filters.type = type;
+    this.filters.search = '';
+    this.filters.sort = 'none';
+    this.filtersChange.emit({ ...this.filters });
+  }
+
+  // ⚡ Ordenar por poder
+  onSortChange(sort: string) {
   if (this.disabled) return;
+
+  if (sort !== 'strongest' && sort !== 'weakest') return;
 
   this.filters.search = '';
   this.filters.type = '';
-  this.filters.sort = 'strongest';
-  this.filtersChange.emit({ ...this.filters });
-}
+  this.filters.sort = sort;
 
-onTypeChange(type: string) {
-  if (this.disabled) return;
-
-  this.filters.type = type;
-  this.filters.search = '';
-  this.filters.sort = 'none';
   this.filtersChange.emit({ ...this.filters });
 }
 }

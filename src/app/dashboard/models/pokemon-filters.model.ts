@@ -1,5 +1,5 @@
 export interface PokemonFilters {
   search: string;
   type: string;
-  sort: 'none' | 'strongest';
+  sort: 'none' | 'strongest' | 'weakest';
 }

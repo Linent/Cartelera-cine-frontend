@@ -7,8 +7,8 @@ import { PokemonFilters } from '../models/pokemon-filters.model';
 
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { PokemonFiltersComponent } from '../pokemon-filters/pokemon-filters.component';
+import { ViewMode } from '../dashboard-home/types';
 
-type ViewMode = 'all' | 'type' | 'search' | 'strongest';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -32,7 +32,6 @@ export class DashboardHomeComponent implements OnInit {
 
   mode: ViewMode = 'all';
   loading = false;
-  loadingStrongest = false;
   noMore = false;
 
   offset = 0;
@@ -79,12 +78,12 @@ export class DashboardHomeComponent implements OnInit {
 
   onFiltersChange(filters: PokemonFilters): void {
 
-  if (filters.sort === 'strongest') {
-    this.searchTerm = '';
-    this.selectedType = '';
-    this.loadStrongest();
-    return;
-  }
+  if (filters.sort === 'strongest' || filters.sort === 'weakest') {
+  this.searchTerm = '';
+  this.selectedType = '';
+  this.loadByPower(filters.sort);
+  return;
+}
 
   if (filters.search) {
     this.mode = 'search';
@@ -141,30 +140,34 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  loadStrongest(): void {
-    if (this.loadingStrongest) return;
+loadByPower(order: 'strongest' | 'weakest'): void {
+  if (this.loading) return;
 
-    this.mode = 'strongest';
-    this.loadingStrongest = true;
-    this.loading = true;
-    this.noMore = false;
+  this.mode = order;
+  this.loading = true;
+  this.noMore = false;
+  this.filtered = [];
 
-    this.pokemonService.getAllPokemonsSortedByPower().subscribe({
-      next: (list) => {
-        this.allTypePokemons = list;
-        this.filtered = list.slice(0, this.limit);
-        this.noMore = this.filtered.length >= list.length;
-        this.loadingStrongest = false;
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.loadingStrongest = false;
-        this.loading = false;
-        this.cdr.detectChanges();
-      }
-    });
-  }
+  this.pokemonService.getAllPokemonsSortedByPower().subscribe({
+    next: (list) => {
+      const ordered =
+        order === 'weakest'
+          ? [...list].reverse()
+          : list;
+
+      this.allTypePokemons = ordered;
+      this.filtered = ordered.slice(0, this.limit);
+      this.noMore = this.filtered.length >= ordered.length;
+      this.loading = false;
+      this.cdr.detectChanges();
+    },
+    error: () => {
+      this.loading = false;
+      this.cdr.detectChanges();
+    }
+  });
+}
+
 
   loadMore(): void {
     if (this.mode === 'search') return;

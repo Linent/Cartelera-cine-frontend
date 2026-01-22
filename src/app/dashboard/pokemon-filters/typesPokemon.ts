@@ -1,7 +1,7 @@
 import { DropdownOption } from '../../shared/ui/dropdown/dropdown-option.model';
 
 export const typesPokemon: DropdownOption[] = [
-    { label: 'Todos los tipos', value: '' },
+    { label: 'Todos', value: '' },
     { label: 'Normal', value: 'normal' },
     { label: 'Fire', value: 'fire' },
     { label: 'Water', value: 'water' },
