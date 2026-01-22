@@ -1,5 +1,5 @@
 <!-- ========================= -->
-<!-- 🧭 HEADER DE SECCIÓN -->
+<!-- 🧭 HEADER -->
 <!-- ========================= -->
 <section class="mb-12 text-center md:text-left">
   <h1 class="text-3xl font-bold text-white">
@@ -11,7 +11,7 @@
 </section>
 
 <!-- ========================= -->
-<!-- 🔍 FILTROS -->
+<!-- 🔍 FILTERS -->
 <!-- ========================= -->
 <section class="mb-12">
   <app-pokemon-filters
@@ -26,13 +26,12 @@
           ? 'weakest'
           : 'none'
     }"
-    (filtersChange)="onFiltersChange($event)"
-  >
+    (filtersChange)="onFiltersChange($event)">
   </app-pokemon-filters>
 </section>
 
 <!-- ========================= -->
-<!-- ⏳ LOADING GENERAL -->
+<!-- ⏳ GLOBAL LOADING -->
 <!-- ========================= -->
 <section
   *ngIf="loading && filtered.length === 0"
@@ -40,8 +39,8 @@
 >
   <div
     class="animate-spin rounded-full h-12 w-12
-           border-t-2 border-b-2 border-red-500 mb-4"
-  ></div>
+           border-t-2 border-b-2 border-red-500 mb-4">
+  </div>
 
   <p class="text-white text-lg font-semibold">
     {{
@@ -63,7 +62,7 @@
 </section>
 
 <!-- ========================= -->
-<!-- ❌ SIN RESULTADOS -->
+<!-- ❌ EMPTY STATE -->
 <!-- ========================= -->
 <section
   *ngIf="!loading && filtered.length === 0"
@@ -75,10 +74,10 @@
 </section>
 
 <!-- ========================= -->
-<!-- 🧩 GRID DE POKÉMON -->
+<!-- 🧩 GRID -->
 <!-- ========================= -->
 <section
-  *ngIf="filtered.length > 0 && !loading"
+  *ngIf="filtered.length > 0"
   class="mb-16"
 >
   <div
@@ -90,28 +89,40 @@
   >
     <app-pokemon-card
       *ngFor="let pokemon of filtered"
-      [pokemon]="pokemon"
-    >
+      [pokemon]="pokemon">
     </app-pokemon-card>
   </div>
 </section>
 
 <!-- ========================= -->
-<!-- ➕ CARGAR MÁS -->
+<!-- ➕ LOAD MORE (NO JUMP) -->
 <!-- ========================= -->
 <section
-  *ngIf="!noMore && mode !== 'search' && !loading"
+  *ngIf="!noMore && mode !== 'search'"
   class="flex justify-center mb-24"
 >
   <button
     (click)="loadMore()"
+    [disabled]="loadingMore"
     class="bg-red-600 hover:bg-red-700
            text-white px-10 py-3
            rounded-full font-bold
            transition-all shadow-lg shadow-red-600/30
            active:scale-95
-           disabled:opacity-50 disabled:cursor-not-allowed"
+           disabled:opacity-50 disabled:cursor-not-allowed
+           flex items-center gap-3"
   >
-    Cargar más Pokémon
+    <ng-container *ngIf="!loadingMore">
+      Cargar más Pokémon
+    </ng-container>
+
+    <ng-container *ngIf="loadingMore">
+      <span
+        class="animate-spin h-4 w-4
+               border-t-2 border-b-2 border-white
+               rounded-full">
+      </span>
+      Cargando...
+    </ng-container>
   </button>
 </section>
