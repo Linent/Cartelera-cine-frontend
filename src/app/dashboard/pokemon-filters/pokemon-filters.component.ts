@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 
 import { PokemonFilters } from '../models/pokemon-filters.model';
 import { SearchIconComponent } from '../../shared/navbar/icons/search-icon.component';
-import { ChartIconComponent } from '../../shared/navbar/icons/chart-icon.component';
 import { DropdownComponent } from '../../shared/ui/dropdown/dropdown.component';
 import { typesPokemon } from './typesPokemon';
 
@@ -22,7 +21,6 @@ import { typesPokemon } from './typesPokemon';
     CommonModule,
     FormsModule,
     SearchIconComponent,
-    ChartIconComponent,
     DropdownComponent
   ],
   templateUrl: './pokemon-filters.component.html',

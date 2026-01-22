@@ -2,19 +2,19 @@
 
   <!-- BOTÓN -->
   <button
-    type="button"
-    (click)="toggle()"
-    [disabled]="disabled"
-    class="flex items-center justify-between w-full
-           px-6 py-3 rounded-full
-           bg-zinc-900 border border-white/10
-           text-white text-sm font-medium
-           transition-all
-           disabled:opacity-40
-           disabled:cursor-not-allowed
-           disabled:hover:bg-zinc-900
-           disabled:hover:border-white/10
-           disabled:active:scale-100"
+  type="button"
+  (click)="toggle()"
+  [disabled]="disabled"
+  class="flex items-center justify-between w-full
+  px-6 py-3 rounded-full
+  bg-zinc-900 border border-white/10
+  text-white text-sm font-medium
+  transition-all
+  disabled:opacity-40
+  disabled:cursor-not-allowed
+  disabled:hover:bg-zinc-900
+  disabled:hover:border-white/10
+  disabled:active:scale-100"
   >
     <span class="truncate max-w-40 text-left">
       {{ selectedLabel }}
