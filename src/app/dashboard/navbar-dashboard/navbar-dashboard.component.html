@@ -1,41 +1,51 @@
 <header class="w-full bg-black border-b border-white/10">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-white">
-
     <!-- Logo -->
     <a class="font-bold text-lg flex items-center gap-2" href="/dashboard">
-      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-6 h-6"
-        alt="Pokeball" />
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+        class="w-6 h-6"
+        alt="Pokeball"
+      />
       Pokédex Dashboard
     </a>
 
     <nav class="flex gap-6 text-sm items-center">
       <a href="/dashboard">Inicio</a>
       <div class="relative profile-dropdown">
-        <button (click)="toggleProfile()" class="flex items-center gap-2 px-4 py-2 rounded-full
-           bg-white/5 hover:bg-white/10 transition">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="30" />
+        <button
+          (click)="toggleProfile()"
+          class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+        >
+          <img
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+            width="30"
+          />
           iptdevs
           <span class="text-xs">▾</span>
         </button>
 
-        <div *ngIf="isProfileOpen" class="absolute right-0 mt-2 w-44 rounded-xl
-           bg-black border border-white/10 shadow-xl
-           overflow-hidden z-50">
-
-          <button (click)="goToProfile()" class="w-full flex items-center gap-3 px-4 py-3
-             text-sm text-white hover:bg-white/5 transition">
+        <div
+          *ngIf="isProfileOpen"
+          class="absolute right-0 mt-2 w-44 rounded-xl bg-black border border-white/10 shadow-xl overflow-hidden z-50"
+        >
+          <button
+            (click)="goToProfile()"
+            class="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/5 transition"
+          >
             👤 Mi perfil
           </button>
 
-          <button (click)="logout()" class="w-full flex items-center gap-3 px-4 py-3
-             text-sm text-red-400 hover:bg-white/5 transition">
-            <app-logout-icon></app-logout-icon>
-            Cerrar sesión
+          <button
+            (click)="logout()"
+            [disabled]="isLoggingOut"
+            class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-white/5 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <app-logout-icon />
+            {{ isLoggingOut ? 'Cerrando sesión...' : 'Cerrar sesión' }}
           </button>
         </div>
       </div>
-
     </nav>
-
   </div>
 </header>

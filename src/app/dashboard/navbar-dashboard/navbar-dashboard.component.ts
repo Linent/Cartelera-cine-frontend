@@ -18,6 +18,7 @@ import { LogoutIconComponent } from './icons/logout-icon.component';
 export class NavbarDashboardComponent {
 
   isProfileOpen = false;
+  isLoggingOut = false; // 🔒 bloqueo
 
   constructor(
     private authService: AuthService,
@@ -33,8 +34,12 @@ export class NavbarDashboardComponent {
     this.router.navigate(['/dashboard/profile']);
   }
 
-  logout() {
-    this.authService.logout();
+  async logout() {
+    if (this.isLoggingOut) return;
+
+    this.isLoggingOut = true;
+    await this.authService.logout();
+    this.isLoggingOut = false;
   }
 
   @HostListener('document:click', ['$event'])
