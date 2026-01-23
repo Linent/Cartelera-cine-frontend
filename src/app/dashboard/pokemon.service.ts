@@ -63,4 +63,10 @@ export class PokemonService {
       ),
     );
   }
+
+  getPokemonNames(): Observable<string[]> {
+  return this.http
+    .get<{ results: { name: string }[] }>(`${this.API}/pokemon/?limit=2000`)
+    .pipe(map(res => res.results.map(p => p.name)));
+}
 }
