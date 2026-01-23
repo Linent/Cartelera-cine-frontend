@@ -51,16 +51,16 @@ export class PokemonFiltersComponent implements OnChanges {
     }
   }
 
-  // 🔍 Buscar por nombre
+
   applySearch() {
     if (this.disabled) return;
-    //if (!this.filters.search.trim()) return;
+
     this.filters.type = '';
     this.filters.sort = 'none';
     this.filtersChange.emit({ ...this.filters });
   }
 
-  // 🧬 Cambio de tipo
+
   onTypeChange(type: string) {
     if (this.disabled) return;
 
@@ -70,7 +70,7 @@ export class PokemonFiltersComponent implements OnChanges {
     this.filtersChange.emit({ ...this.filters });
   }
 
-  // ⚡ Ordenar por poder
+
   onSortChange(sort: string) {
   if (this.disabled) return;
 

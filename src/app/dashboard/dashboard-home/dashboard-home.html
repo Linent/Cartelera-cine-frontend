@@ -1,6 +1,4 @@
-<!-- ========================= -->
-<!-- 🧭 HEADER -->
-<!-- ========================= -->
+
 <section class="mb-12 text-center md:text-left">
   <h1 class="text-3xl font-bold text-white">
     Bienvenido, iptdevs! 👋
@@ -10,9 +8,6 @@
   </p>
 </section>
 
-<!-- ========================= -->
-<!-- 🔍 FILTERS -->
-<!-- ========================= -->
 <section class="mb-12">
   <app-pokemon-filters
     [disabled]="loading"
@@ -30,9 +25,6 @@
   </app-pokemon-filters>
 </section>
 
-<!-- ========================= -->
-<!-- ⏳ GLOBAL LOADING -->
-<!-- ========================= -->
 <section
   *ngIf="loading && filtered.length === 0"
   class="flex flex-col items-center justify-center my-24"
@@ -61,9 +53,7 @@
   </p>
 </section>
 
-<!-- ========================= -->
-<!-- ❌ EMPTY STATE -->
-<!-- ========================= -->
+
 <section
   *ngIf="!loading && filtered.length === 0"
   class="text-center my-24"
@@ -73,9 +63,6 @@
   </p>
 </section>
 
-<!-- ========================= -->
-<!-- 🧩 GRID -->
-<!-- ========================= -->
 <section
   *ngIf="filtered.length > 0"
   class="mb-16"
@@ -94,9 +81,6 @@
   </div>
 </section>
 
-<!-- ========================= -->
-<!-- ➕ LOAD MORE (NO JUMP) -->
-<!-- ========================= -->
 <section
   *ngIf="!noMore && mode !== 'search'"
   class="flex justify-center mb-24"

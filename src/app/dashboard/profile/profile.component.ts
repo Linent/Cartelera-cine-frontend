@@ -21,7 +21,6 @@ export class ProfileComponent implements OnInit {
   loading = true;
   showPasswordModal = false;
 
-  // Inyectores modernos
   private profileService = inject(ProfileService);
   private toastService = inject(ToastService);
   private cdr = inject(ChangeDetectorRef);
@@ -31,14 +30,14 @@ export class ProfileComponent implements OnInit {
       this.loading = true;
       const [profile, genresData] = await Promise.all([
         this.profileService.getProfile(),
-        this.profileService.getGenres()
+        this.profileService.getGenres(),
       ]);
 
       this.user = profile;
       this.genres = genresData;
 
       if (profile && profile.genres) {
-        profile.genres.forEach(g => this.selected.add(g.id));
+        profile.genres.forEach((g) => this.selected.add(g.id));
       }
     } catch (error) {
       this.toastService.show('Error cargando el perfil', 'error');
@@ -48,11 +47,9 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // 👈 ESTA ES LA FUNCIÓN QUE FALTABA
   onPasswordUpdated() {
     console.log('Contraseña actualizada correctamente');
     this.showPasswordModal = false;
-    // Aquí podrías cerrar sesión o pedir re-login si el backend lo requiere
   }
 
   openPasswordModal() {

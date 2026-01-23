@@ -18,7 +18,7 @@ import { LogoutIconComponent } from './icons/logout-icon.component';
 export class NavbarDashboardComponent {
 
   isProfileOpen = false;
-  isLoggingOut = false; // 🔒 bloqueo
+  isLoggingOut = false; 
 
   constructor(
     private authService: AuthService,

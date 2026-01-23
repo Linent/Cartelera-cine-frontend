@@ -21,21 +21,21 @@ import { ViewMode } from '../dashboard-home/types';
 })
 export class DashboardHomeComponent implements OnInit {
 
-  // 📦 Data
+
   pokemons: Pokemon[] = [];
   filtered: Pokemon[] = [];
   allTypePokemons: Pokemon[] = [];
   loadingMore = false;
-  // 🔍 Filters state
+
   searchTerm = '';
   selectedType = '';
 
-  // 🧠 UI state
+
   mode: ViewMode = 'all';
   loading = false;
   noMore = false;
 
-  // 📄 Pagination
+
   offset = 0;
   limit = 30;
 
@@ -48,9 +48,6 @@ export class DashboardHomeComponent implements OnInit {
     this.loadInitial();
   }
 
-  // ========================
-  // 🚀 INITIAL LOAD
-  // ========================
   loadInitial(): void {
     this.mode = 'all';
     this.offset = 0;
@@ -60,14 +57,12 @@ export class DashboardHomeComponent implements OnInit {
     this.loadPokemons();
   }
 
-  // ========================
-  // 📦 GENERAL POKEDEX
-  // ========================
+
   loadPokemons(): void {
-    // Si ya estamos cargando algo, salimos para evitar duplicados
+
     if (this.loading || this.loadingMore || this.noMore) return;
 
-    // Si ya hay pokémons, usamos loadingMore para no disparar el loading de pantalla completa
+
     if (this.pokemons.length > 0) {
       this.loadingMore = true;
     } else {
@@ -76,15 +71,15 @@ export class DashboardHomeComponent implements OnInit {
 
     this.pokemonService.getPokemonPage(this.limit, this.offset).subscribe({
       next: (data) => {
-        // Concatenamos los nuevos datos
+
         this.pokemons = [...this.pokemons, ...data];
         this.filtered = [...this.pokemons];
         this.offset += this.limit;
 
-        // Verificamos si llegamos al final
+
         this.noMore = data.length < this.limit;
 
-        // Apagamos ambas banderas
+
         this.loading = false;
         this.loadingMore = false;
         this.cdr.detectChanges();
@@ -97,12 +92,9 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // 🔍 FILTERS HANDLER
-  // ========================
   onFiltersChange(filters: PokemonFilters): void {
 
-    // 💪 Strongest / Weakest
+
     if (filters.sort === 'strongest' || filters.sort === 'weakest') {
       this.searchTerm = '';
       this.selectedType = '';
@@ -110,7 +102,7 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🔎 Search by name
+
     if (filters.search) {
       this.mode = 'search';
       this.searchTerm = filters.search.toLowerCase().trim();
@@ -133,7 +125,7 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🧬 Filter by type
+
     if (filters.type) {
       this.mode = 'type';
       this.searchTerm = '';
@@ -142,15 +134,13 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🔄 Reset
+
     this.searchTerm = '';
     this.selectedType = '';
     this.loadInitial();
   }
 
-  // ========================
-  // 🧬 LOAD BY TYPE
-  // ========================
+
   loadByType(type: string): void {
     this.loading = true;
     this.noMore = false;
@@ -170,9 +160,7 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // 🥇 STRONGEST / WEAKEST
-  // ========================
+
   loadByPower(order: 'strongest' | 'weakest'): void {
     if (this.loading) return;
 
@@ -201,23 +189,21 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // ➕ LOAD MORE (NO SCROLL JUMP)
-  // ========================
+
   loadMore(): void {
-    // Evitar múltiples clics o carga en búsqueda individual
+
     if (this.mode === 'search' || this.loadingMore || this.loading || this.noMore) return;
 
     if (this.mode === 'all') {
-      // Llamamos a la carga de API directamente
+
       this.loadPokemons();
       return;
     }
 
-    // Paginación local para modo 'type' o 'strongest/weakest'
+
     this.loadingMore = true;
 
-    // Simulamos un pequeño delay para que la UX sea suave, o lo hacemos instantáneo
+
     setTimeout(() => {
       const nextCount = this.filtered.length + this.limit;
       this.filtered = this.allTypePokemons.slice(0, nextCount);

@@ -22,12 +22,11 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   isMobile = false;
 
-  // drag / swipe
   isDragging = false;
   startX = 0;
   currentX = 0;
 
-  readonly DRAG_THRESHOLD = 80; 
+  readonly DRAG_THRESHOLD = 80;
 
   ngOnInit() {
     this.checkViewport();
