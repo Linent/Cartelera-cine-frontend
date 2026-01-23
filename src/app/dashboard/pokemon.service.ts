@@ -46,27 +46,21 @@ export class PokemonService {
       );
   }
   getAllPokemonsSortedByPower(): Observable<Pokemon[]> {
-  return this.http.get<{ results: { url: string }[] }>(
-    `${this.API}/pokemon/?limit=2000`
-  ).pipe(
-    switchMap(res =>
-      forkJoin(
-        res.results.map(p =>
-          this.http.get<Pokemon>(p.url).pipe(
-            catchError(() => of(null))
-          )
-        )
-      )
-    ),
-    map(list =>
-      list
-        .filter((p): p is Pokemon => p !== null)
-        .sort((a, b) => {
-          const powerA = a.stats.reduce((s, st) => s + st.base_stat, 0);
-          const powerB = b.stats.reduce((s, st) => s + st.base_stat, 0);
-          return powerB - powerA;
-        })
-    )
-  );
-}
+    return this.http.get<{ results: { url: string }[] }>(`${this.API}/pokemon/?limit=2000`).pipe(
+      switchMap((res) =>
+        forkJoin(
+          res.results.map((p) => this.http.get<Pokemon>(p.url).pipe(catchError(() => of(null)))),
+        ),
+      ),
+      map((list) =>
+        list
+          .filter((p): p is Pokemon => p !== null)
+          .sort((a, b) => {
+            const powerA = a.stats.reduce((s, st) => s + st.base_stat, 0);
+            const powerB = b.stats.reduce((s, st) => s + st.base_stat, 0);
+            return powerB - powerA;
+          }),
+      ),
+    );
+  }
 }
