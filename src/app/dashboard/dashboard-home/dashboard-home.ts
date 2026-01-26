@@ -24,29 +24,29 @@ import { ViewMode } from '../dashboard-home/types';
 })
 export class DashboardHomeComponent implements OnInit {
 
-  // 🔎 Fuzzy search
+ 
   private fuse!: Fuse<string>;
   private pokemonNames: string[] = [];
 
-  // 📦 Data
+
   pokemons: Pokemon[] = [];
   filtered: Pokemon[] = [];
   allTypePokemons: Pokemon[] = [];
 
-  // 💡 UI state
+ 
   loading = false;
   loadingMore = false;
   noMore = false;
 
-  // 🔍 Filters
+
   searchTerm = '';
   selectedType = '';
   suggestedPokemon: string | null = null;
 
-  // 🧭 View
+  
   mode: ViewMode = 'all';
 
-  // 📄 Pagination
+
   offset = 0;
   limit = 30;
 
@@ -55,9 +55,7 @@ export class DashboardHomeComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  // ========================
-  // 🚀 INIT
-  // ========================
+
   ngOnInit(): void {
     this.loadInitial();
 
@@ -69,9 +67,7 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // 📦 INITIAL LOAD
-  // ========================
+ 
   loadInitial(): void {
     this.mode = 'all';
     this.offset = 0;
@@ -106,12 +102,10 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // 🔍 FILTERS
-  // ========================
+  
   onFiltersChange(filters: PokemonFilters): void {
 
-    // 💪 Strongest / Weakest
+
     if (filters.sort === 'strongest' || filters.sort === 'weakest') {
       this.searchTerm = '';
       this.selectedType = '';
@@ -120,7 +114,7 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🔎 Search by name
+   
     if (filters.search) {
       this.mode = 'search';
       this.searchTerm = filters.search.toLowerCase().trim();
@@ -141,7 +135,6 @@ export class DashboardHomeComponent implements OnInit {
           if (result && result.length > 0) {
             this.suggestedPokemon = result[0].item;
 
-            // ✅ cargamos automáticamente el sugerido
             this.pokemonService.getPokemonByName(this.suggestedPokemon).subscribe({
               next: pokemon => {
                 this.filtered = [pokemon];
@@ -166,7 +159,6 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🧬 Type
     if (filters.type) {
       this.mode = 'type';
       this.searchTerm = '';
@@ -176,13 +168,10 @@ export class DashboardHomeComponent implements OnInit {
       return;
     }
 
-    // 🔄 Reset
+  
     this.loadInitial();
   }
 
-  // ========================
-  // 💡 Suggested click
-  // ========================
   searchSuggested(): void {
     if (!this.suggestedPokemon) return;
 
@@ -190,9 +179,7 @@ export class DashboardHomeComponent implements OnInit {
     this.suggestedPokemon = null;
   }
 
-  // ========================
-  // 🧬 By type
-  // ========================
+
   loadByType(type: string): void {
     this.loading = true;
     this.noMore = false;
@@ -212,9 +199,7 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // 💪 By power
-  // ========================
+
   loadByPower(order: 'strongest' | 'weakest'): void {
     if (this.loading) return;
 
@@ -239,9 +224,6 @@ export class DashboardHomeComponent implements OnInit {
     });
   }
 
-  // ========================
-  // ➕ Load more
-  // ========================
   loadMore(): void {
     if (this.mode === 'search' || this.loading || this.loadingMore || this.noMore) return;
 
